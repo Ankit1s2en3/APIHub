@@ -17,6 +17,10 @@ copy-config-example: ## Copy config of the example. Usage DEPLOY_ENV=[dev|integr
 copy-config-healthcare: ## Copy config of the healthcare. Usage DEPLOY_ENV=[dev|integration|layer7] make copy-config-healthcare.
 	cp packages/healthcare/config/config-${DEPLOY_ENV}.js packages/healthcare/public/config.js
 
+
+copy-config-carrier: ## Copy config of the carrier. Usage DEPLOY_ENV=[dev|integration|layer7] make copy-config-carrier.
+	cp packages/carrier/config/config-${DEPLOY_ENV}.js packages/carrier/public/config.js
+
 generate-mock-data: ## Generate new data for the mock server. Usage OUTPUT_FILE=my-file.json make generate-mock-data. OUTPUT_FILE is optionnal.
 	./packages/layer7-apihub-mock/bin/generateData.js ${OUTPUT_FILE}
 
@@ -31,6 +35,9 @@ build-example: ## Build the example
 build-healthcare: ## Build the healthcare
 	@yarn build-healthcare
 
+build-carrier: ## Build the carrier
+	@yarn build-carrier
+
 
 #### Run ####
 
@@ -39,6 +46,9 @@ start: copy-config-example build ## Starts the application in development mode
 
 start-healthcare: copy-config-healthcare build ## Starts the application in development mode
 	@yarn start-healthcare
+
+start-carrier: copy-config-carrier build ## Starts the application in development mode
+	@yarn start-carrier
 
 watch-lib: ## Starts the library in development mode
 	@yarn start-lib
