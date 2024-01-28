@@ -4,6 +4,7 @@ import { AppBar, Toolbar, Button, makeStyles } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 'auto',  // Push the footer to the bottom of the viewport
+    minHeight:'4px'
   },
   toolbar: {
     display: 'flex',

@@ -1,0 +1,387 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "",
+      "description": "",
+      "version": ""
+    },
+    "basePath": "/login",
+    "tags": [
+      {
+        "name": "OTK Token",
+        "description": "Token endpoint for OAuth Toolkit"
+      }
+    ],
+    "schemes": [
+      "https"
+    ],
+    "consumes": [],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/auth/oauth/v2/token": {
+        "post": {
+          "tags": [
+            "OTK Token"
+          ],
+          "consumes": [
+            "application/x-www-form-urlencoded"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "mag-identifier",
+              "in": "header",
+              "required": false,
+              "x-is-map": false,
+              "type": "string",
+              "description": "Mobile clients **must** use this header. It must represent a valid registered device. This `grant_type`, however, is not supported by Mobile API Gateway."
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "required": false,
+              "x-is-map": false,
+              "type": "string",
+              "description": "The HTTP basic authorization header containing the client credentials as a Base64 encoded string (`authorization: Basic Base64(client_id:client_secret)`). This can only be used **instead of** the parameters `client_id` and `client_secret`."
+            },
+            {
+              "name": "client_id",
+              "in": "query",
+              "required": false,
+              "x-is-map": false,
+              "type": "string",
+              "description": "Identifies the client making the request. Can **only** be used if you are not providing an `authorization` value"
+            },
+            {
+              "name": "client_secret",
+              "in": "query",
+              "required": false,
+              "x-is-map": false,
+              "type": "string",
+              "description": "The client secret. Can **only** be used if you are not providing an `authorization` value"
+            },
+            {
+              "name": "grant_type",
+              "in": "query",
+              "required": true,
+              "x-is-map": false,
+              "default": "password",
+              "enum": [
+                "password",
+                "refresh_token",
+                "authorization_code",
+                "client_credentials",
+                "urn:ietf:params:oauth:grant-type:jwt-bearer",
+                "urn:ietf:params:oauth:grant-type:saml2-bearer"
+              ],
+              "type": "string",
+              "description": "The OAuth 2.0 grant type."
+            },
+            {
+              "name": "code",
+              "in": "query",
+              "required": false,
+              "x-is-map": false,
+              "type": "string",
+              "description": "Required if `grant_type=authorization_code`."
+            },
+            {
+              "name": "redirect_uri",
+              "in": "query",
+              "required": false,
+              "x-is-map": false,
+              "type": "string",
+              "description": "Required if `grant_type=authorization_code`. Must contain a valid auth code."
+            },
+            {
+              "name": "scope",
+              "in": "query",
+              "required": false,
+              "x-is-map": false,
+              "type": "string",
+              "description": "The scope of the access request. **Only** scope values registered for this client will be granted. If only non-matching scope values are requested, the request will fail. Possible values are: `oob` (out of bounds, i.e. any scope), `openid email profile` (OpenID, email address and profile values)"
+            },
+            {
+              "name": "username",
+              "in": "query",
+              "required": false,
+              "x-is-map": false,
+              "type": "string",
+              "description": "A valid user name. **Only** applicable if `grant_type=password` or `grant_type=client_credentials`"
+            },
+            {
+              "name": "password",
+              "in": "query",
+              "required": false,
+              "x-is-map": false,
+              "type": "string",
+              "format": "password",
+              "description": "A valid password. **Only** applicable if `grant_type=password` or `grant_type=client_credentials`"
+            },
+            {
+              "name": "assertion",
+              "in": "query",
+              "required": false,
+              "x-is-map": false,
+              "type": "string",
+              "description": "A Base64 encoded SAML or JWT token that represents an authenticated resource owner. **Only** applicable if `grant_type=saml2-bearer` or `grant_type=jwt`, respectively"
+            },
+            {
+              "name": "refresh_token",
+              "in": "query",
+              "required": false,
+              "x-is-map": false,
+              "type": "string",
+              "description": "A valid refresh token. **Only** applicable if `grant_type=refresh_token`"
+            },
+            {
+              "name": "code_verifier",
+              "in": "query",
+              "required": false,
+              "x-is-map": false,
+              "type": "string",
+              "description": "A random value of 43-256 characters. See https://tools.ietf.org/html/rfc7636#section-4 for details.  This parameter is required only when a `code_challenge` is provided with the authorization request for this session."
+            }
+          ]
+        }
+      }
+    },
+    "definitions": {
+      "TokenData": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "The Access Token for the given token request"
+          },
+          "token_type": {
+            "type": "string",
+            "description": "The Token Type issued",
+            "example": "Bearer"
+          },
+          "expires_in": {
+            "type": "string",
+            "description": "The expiry time, in seconds",
+            "example": "3600"
+          },
+          "refresh_token": {
+            "type": "string",
+            "description": "The refresh token, if applicable"
+          },
+          "scope": {
+            "type": "string",
+            "description": "The issued scope",
+            "example": "oob"
+          },
+          "id_token": {
+            "type": "string",
+            "description": "If the requested SCOPE included 'msso' or 'openid', response includes an id_token"
+          },
+          "id_token_type": {
+            "type": "string",
+            "description": "If the requested SCOPE included 'msso' or 'openid', response includes an id_token_type"
+          }
+        },
+        "title": "TokenData"
+      }
+    },
+    "responses": {
+      "auth302": {
+        "description": "Will contain either: A success response including the redirect location header to the server that handles the authentication.  The redirect parameter 'sessionData's structure looks like the model schema shown OR 'invalid mag-identifier' OR 'invalid scope' OR 'unsupported response type' OR 'unauthorized client'. The non-successful conditions may include redirect query params as follows: 'error', string with default value:  invalid_request 'error_description', string with description of error 'state', string with no default value.  It is opaque to the server and returned as received. 'x-ca-err', string with default 3000108",
+        "schema": {
+          "required": [
+            "session",
+            "request_consent",
+            "request_parameters"
+          ],
+          "type": "object",
+          "properties": {
+            "session": {
+              "type": "object",
+              "properties": {
+                "sessionID": {
+                  "type": "string",
+                  "description": "The session identifier"
+                },
+                "exp": {
+                  "type": "string",
+                  "description": "Expiry"
+                },
+                "current_username": {
+                  "type": "string",
+                  "description": "The current username"
+                },
+                "current_user_consent": {
+                  "type": "string",
+                  "description": "The current user consent string"
+                },
+                "current_user_role": {
+                  "type": "string",
+                  "description": "The current user role"
+                },
+                "current_user_acr": {
+                  "type": "string",
+                  "description": "The current user acr"
+                },
+                "current_user_authTime": {
+                  "type": "string",
+                  "description": "The current user's authentication time"
+                },
+                "salt": {
+                  "type": "string",
+                  "description": "Salt"
+                },
+                "third_party_sso_token": {
+                  "type": "string",
+                  "description": "The third party SSO token"
+                },
+                "third_party_sso_token_type": {
+                  "type": "string",
+                  "description": "The third party SSO token type"
+                }
+              },
+              "title": "SessionObject"
+            },
+            "request_consent": {
+              "type": "object",
+              "properties": {
+                "client_name": {
+                  "type": "string",
+                  "description": "The client name"
+                },
+                "scope_verified": {
+                  "type": "string",
+                  "description": "Valid scope for this client"
+                }
+              },
+              "title": "RequestConsentObject"
+            },
+            "request_parameters": {
+              "type": "object",
+              "properties": {
+                "display": {
+                  "type": "string",
+                  "description": "The display value"
+                },
+                "prompt": {
+                  "type": "string",
+                  "description": "The prompt value"
+                },
+                "id_token_hint": {
+                  "type": "string",
+                  "description": "ID token for the authenticated user"
+                },
+                "acr_values": {
+                  "type": "string",
+                  "description": "A list of ACR values"
+                },
+                "client_id": {
+                  "type": "string",
+                  "description": "The client identifier"
+                },
+                "nonce": {
+                  "type": "string",
+                  "description": "A nonce"
+                },
+                "scope": {
+                  "type": "string",
+                  "description": "The requested scope"
+                }
+              },
+              "title": "RequestParametersObject"
+            }
+          },
+          "title": "ServiceProviderConfigurationData"
+        },
+        "headers": { 
+          "location": {
+            "description": "Location (URL) includes these required parameters: `action=(display or login depending on 'prompt' and 'id_token_hint') & sessionID & sessionData (a JWT containing a JSON message holding session data)`",
+            "type": "string"
+          },
+          "Pragma": {
+            "description": "Pragma directive",
+            "type": "string",
+            "default": "no-cache"
+          },
+          "Cache-Control": {
+            "description": "Cache control directive",
+            "type": "string",
+            "default": "no-store"
+          }
+        }
+      },
+      "authToken200": {
+        "description": "A success response that includes the issued token, the expiry timeframe (in seconds), and other details from the OAuth Server.",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "access_token": {
+              "type": "string",
+              "description": "The access Token for the token request"
+            },
+            "token_type": {
+              "type": "string",
+              "description": "The token type issued",
+              "example": "Bearer"
+            },
+            "expires_in": {
+              "type": "string",
+              "description": "The expiry time in seconds",
+              "example": "3600"
+            },
+            "refresh_token": {
+              "type": "string",
+              "description": "The refresh token, if applicable"
+            },
+            "scope": {
+              "type": "string",
+              "description": "The issued scope",
+              "example": "oob"
+            },
+            "id_token": {
+              "type": "string",
+              "description": "If the requested `scope` included `msso` or `openid`, the response will include `id_token`"
+            },
+            "id_token_type": {
+              "type": "string",
+              "description": "If the requested `scope` included `msso` or `openid`, the response will include an `id_token_type`"
+            }
+          },
+          "title": "TokenData"
+        },
+        "headers": {
+          "Pragma": {
+            "description": "Pragma browser directive",
+            "type": "string",
+            "default": "no-cache"
+          },
+          "Cache-Control": {
+            "description": "Cache-Control browser directive",
+            "type": "string",
+            "default": "no-store"
+          }
+        }
+      },
+      "application": {
+        "description": "Application data containing the `client_id` (i.e. `apikey`).",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "apikey": {
+              "type": "string",
+              "description": "The application `client_id` or `apikey`."
+            },
+            "scope": {
+              "type": "string",
+              "description": "The application scope."
+            }
+          },
+          "title": "ApplicationData"
+        }
+      }
+    }
+  }

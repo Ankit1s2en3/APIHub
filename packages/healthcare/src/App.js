@@ -21,8 +21,11 @@ import { applications } from './applications';
 import { documents } from './documentation';
 
 const App = () => {
-    const { PAGE_TITLE, APIHUB_URL, TENANT_NAME } = global.APIHUB_CONFIG;
-
+    let { PAGE_TITLE, APIHUB_URL, TENANT_NAME } = global.APIHUB_CONFIG;
+    // APIHUB_URL = 'https://staging2.developer.carrier.com';
+    // TENANT_NAME = 'staging2';
+    console.log('API HUB URL :> ', APIHUB_URL);
+    console.log('Tenant name :> ', TENANT_NAME);
     return (
         <>
             <Helmet>

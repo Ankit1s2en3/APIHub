@@ -6,6 +6,9 @@ import ArchiveIcon from '@material-ui/icons/Archive';
 import SearchIcon from '@material-ui/icons/Search';
 import BookIcon from '@material-ui/icons/Book';
 import CameraIcon from '@material-ui/icons/Camera';
+import EnhancedEncryptionIcon from '@material-ui/icons/EnhancedEncryption';
+import PublicIcon from '@material-ui/icons/Public';
+import { useAuth } from '../context/authContext';
 import { FormInput, Link, List, SimpleForm, TextInput, Toolbar,useListContext,useNotify } from 'react-admin';
 
 const useStyles = makeStyles((theme) => ({
@@ -121,24 +124,35 @@ const useStyles = makeStyles((theme) => ({
 function CustomApplications(props) {
     const classes = useStyles();
     const notify = useNotify();
-    const apisList = [
-        { id: 'pim', name: 'PIM API', icon: <ArchiveIcon  className={classes.icon}/>, description: 'Get all PIM Carrier Apis.' },
-        { id: 'pic', name: 'PIC API', icon: <SearchIcon  className={classes.icon}/>, description: 'Get all PIC Carrier Apis.' },
-        { id: 'phdb', name: 'PHDB Serial to model API', icon: <BookIcon className={classes.icon} />, description: 'Get all PHDB Serial to model carrier api.' },
-        { id: 'availability', name: 'Availability API', icon: <CameraIcon className={classes.icon}/>, description: 'Get all Availability carrier api.' },
-    ];
+    const {user,setUser} = useAuth()
+    // const apisList = [
+    //     { id: 'public', name: 'Public API', icon: <PublicIcon  className={classes.icon}/>, description: 'Get all public Carrier Apis.' },
+    //     { id: 'pim', name: 'PIM API', icon: <ArchiveIcon  className={classes.icon}/>, description: 'Get all PIM Carrier Apis.' },
+    //     { id: 'pic', name: 'PIC API', icon: <SearchIcon  className={classes.icon}/>, description: 'Get all PIC Carrier Apis.' },
+    //     { id: 'phdb', name: 'PHDB Serial to model API', icon: <BookIcon className={classes.icon} />, description: 'Get all PHDB Serial to model carrier api.' },
+    //     { id: 'availability', name: 'Availability API', icon: <CameraIcon className={classes.icon}/>, description: 'Get all Availability carrier api.' },
+    //     { id: 'internal', name: 'Internal API', icon: <EnhancedEncryptionIcon className={classes.icon}/>, description: 'Get all Internal carrier api.' },
+    // ];
+    const [apisList,setApisList] = useState([{ id: 'login', name: 'Public API', icon: <PublicIcon  className={classes.icon}/>, description: 'Get all public Carrier Apis.' }, ])
+    
+    useEffect(()=>{
+        if(user){
+            setApisList([...apisList,{ id: 'pic', name: 'Internal API', icon: <EnhancedEncryptionIcon className={classes.icon}/>, description: 'Get all Internal carrier api.' }])
+            console.log(user)
+        }
+    },[apisList, classes.icon, user])
     
     const CustomToolbar = props => (
         <Toolbar {...props} style={{ display: 'none' }}> {/* This ensures it's hidden */}
         {/* intentionally left blank */}
-      </Toolbar>
-      );
+        </Toolbar>
+        );
 
       const [filter, setFilter] = useState('');
       useEffect(() => {
         console.log("Current filter:", filter);
       }, [filter]);
-  
+      
       const handleSearchChange = (event) => {
           // Additional check to ensure the event and value exist
           if (event?.target?.value !== undefined) {

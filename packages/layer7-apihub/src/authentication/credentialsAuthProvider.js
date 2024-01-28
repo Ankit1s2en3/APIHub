@@ -19,7 +19,7 @@ export const credentialsAuthProvider = (apiUrl, fetchJson) => ({
             });
 
             const { respCode, respMsg } = json;
-
+            console.log('login is called : ', json);
             if (respCode < 200 || respCode >= 300) {
                 throw new Error(respMsg);
             }

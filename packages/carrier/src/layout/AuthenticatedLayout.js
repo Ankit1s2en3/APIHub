@@ -2,7 +2,8 @@ import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import Footer from '../footer/Footer';
 import Header from '../header/Header';
-
+import { AuthContextProvider } from '../context/authContext';
+import SubHeader from '../header/SubHeader';
 function AuthenticatedLayout({ children, ...rest }) {
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -22,11 +23,12 @@ function AuthenticatedLayout({ children, ...rest }) {
     return (
 
         <div className={classes.root}>
-            <Header />
-
-            <div className={classes.content}>{children}</div>
-
-            <Footer />
+            <AuthContextProvider>
+                <Header />
+                <SubHeader />
+                <div className={classes.content}>{children}</div>
+                <Footer />
+            </AuthContextProvider>
         </div>
 
     );

@@ -68,7 +68,6 @@ export const authProvider = (
     return {
         login: async ({ scheme, ...params }) => {
             setSchemeUsedForLogin(scheme);
-
             const authProviderUsedForLogin = getProviderUsedForLogin();
 
             if (!authProviderUsedForLogin) {

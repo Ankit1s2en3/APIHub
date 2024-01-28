@@ -2,8 +2,10 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, Button, makeStyles } from '@material-ui/core';
 import { Avatar, IconButton } from '@material-ui/core';
 import carrier from '../assets/carrier_icon.png';
+import LoginModal from '../components/loginModal/loginModal';
 const useStyles = makeStyles((theme) => ({
   root: {
+    borderBottom:'1px solid black'
   },
   title: {
     flexGrow: 1,
@@ -30,19 +32,32 @@ const handleNavigate = (url) => {
 };
 function Header() {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div className={classes.root}>
+      <LoginModal open={open} handleOpen={handleOpen} handleClose={handleClose} />
       <AppBar position="static" color="white">
         <Toolbar>
-            <Typography variant="h6" className={classes.title}>
-           <img src={carrier} alt="carrier" width="110" height="70" style={{borderRadius: "80%"}} />
+          <Typography variant="h6" className={classes.title}>
+           <img src={carrier} alt="carrier" width="90" height="60" style={{borderRadius: "80%"}} />
            <div className={classes.ovalImage}></div>
           </Typography>
           <Button color="inherit" className={classes.navButton} onClick={() => handleNavigate('#/dashboard')}>Home</Button>
           <Button color="inherit" className={classes.navButton} onClick={() => handleNavigate('#/apps')}>APIs</Button>
           <Button color="inherit" className={classes.navButton} onClick={() => handleNavigate('#/dashboard')}>Get Started</Button>
-          <Button color="inherit" onClick={() => handleNavigate('#/dashboard')}>Sign In</Button>
+          <Button color="inherit" onClick={() => {
+            // handleNavigate('#/dashboard')
+            handleOpen()
+            }}>Sign In</Button>
         
         </Toolbar>
       </AppBar>
