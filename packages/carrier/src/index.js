@@ -10,8 +10,9 @@ import data from './data.json';
 const { ENABLE_MOCK, MOCK_SERVER_INDICATOR_LINK } = global.APIHUB_CONFIG;
 
 export const shouldEnableMock = (enableMock = ENABLE_MOCK) =>
-    enableMock === 'true' || enableMock === true;
-
+    // enableMock === 'true' || enableMock === true;
+    false
+console.log('enable mock server ? ',shouldEnableMock(ENABLE_MOCK))
 if (!shouldEnableMock(ENABLE_MOCK)) {
     ReactDOM.render(<App />, document.getElementById('root'));
 } else {

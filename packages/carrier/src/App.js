@@ -1,5 +1,5 @@
 import React from 'react';
-import { ApiHubAdmin, userProfiles } from 'layer7-apihub';
+// import { ApiHubAdmin, userProfiles } from 'layer7-apihub';
 import { Admin, Resource } from 'react-admin';
 import { Helmet } from 'react-helmet';
 import { Route } from 'react-router-dom';
@@ -13,9 +13,9 @@ import SignUpPage from './authentication';
 import  AuthenticatedLayout  from './layout/AuthenticatedLayout';
 import  LandingPage  from './LandingPage';
 import HomePage from './homepage/HomePage';
-import { dataProvider } from './dataProvider';
-import  apis  from './apis/apis';
-import applications  from './applications';
+// import { dataProvider } from './dataProvider';
+// import  apis  from './apis/apis';
+// import applications  from './applications';
 import  documents  from './documentation';
 import CustomApplications from './customApplications/customApplications';
 import { theme } from './theme';
@@ -55,8 +55,8 @@ const App = () => {
                 dataProvider={fakeDataProvider}
             > 
                 <Resource name="apis"  list={customApiList} />
-                <Resource name="applications" {...applications} />
-                <Resource name="userProfiles" {...userProfiles} />
+                {/* <Resource name="applications" {...applications} /> */}
+                {/* <Resource name="userProfiles" {...userProfiles} /> */}
             {/* </ApiHubAdmin> */}
             </Admin>
         </>

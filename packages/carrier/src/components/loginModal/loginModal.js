@@ -10,7 +10,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
-
+import network from "../../networkLayer/network";
 import { useAuth } from "../../context/authContext";
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -104,7 +104,9 @@ export default function LoginModal(props) {
           />
         </FormControl>
         {values.status !== '' && <p>{values.status}</p>}
-        <Button variant="contained" color="primary" onClick={()=>{
+        <Button variant="contained" color="primary" onClick={async ()=>{
+            const response = await network.login(values.userId, values.password);
+            console.log(response)
             if(values.userId==="ankit12"&& values.password==="abcd1234"){
               console.log('correct password!')
               setValues({ ...values, 'status': '','password':'' });

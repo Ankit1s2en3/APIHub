@@ -2,6 +2,7 @@
   "name": "carrier",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://staging2.developer.carrier.com",
   "dependencies": {
     "layer7-apihub": "1.0.0",
     "layer7-apihub-mock": "1.0.0",
