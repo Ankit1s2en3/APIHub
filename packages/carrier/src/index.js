@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { startApiHubMockedServer } from 'layer7-apihub-mock';
+// import { startApiHubMockedServer } from 'layer7-apihub-mock';
 
 import './index.css';
 import App from './App';
@@ -17,10 +17,10 @@ if (!shouldEnableMock(ENABLE_MOCK)) {
     ReactDOM.render(<App />, document.getElementById('root'));
 } else {
     console.log('Starting the mocked server');
-    startApiHubMockedServer({
-        data,
-        runningIndicatorLink: MOCK_SERVER_INDICATOR_LINK,
-    }).then(() => ReactDOM.render(<App />, document.getElementById('root')));
+    // startApiHubMockedServer({
+    //     data,
+    //     runningIndicatorLink: MOCK_SERVER_INDICATOR_LINK,
+    // }).then(() => ReactDOM.render(<App />, document.getElementById('root')));
 }
 
 // If you want your app to work offline and load faster, you can change
