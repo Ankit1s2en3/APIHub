@@ -11,6 +11,7 @@
         "start-example": "concurrently \"yarn start-lib\" \"yarn start-mock\" \"cd packages/example && yarn start\"",
         "start-healthcare": "concurrently \"yarn start-lib\" \"yarn start-mock\" \"cd packages/healthcare && yarn start\"",
         "start-carrier": "concurrently \"yarn start-lib\" \"yarn start-mock\" \"cd packages/carrier && yarn start\"",
+        "start-only-carrier": "cd packages/carrier && yarn start",
         "start-lib": "cd packages/layer7-apihub && yarn dev",
         "start-mock": "cd packages/layer7-apihub-mock && yarn dev",
         "test": "cd packages/layer7-apihub && yarn test",
