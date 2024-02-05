@@ -12,14 +12,14 @@ import SignUpPage from './authentication';
 
 import  AuthenticatedLayout  from './layout/AuthenticatedLayout';
 import  LandingPage  from './LandingPage';
-import HomePage from './homepage/HomePage';
+import HomePage from './pages/homepage/HomePage';
 // import { dataProvider } from './dataProvider';
 // import  apis  from './apis/apis';
 // import applications  from './applications';
 import  documents  from './documentation';
-import CustomApplications from './customApplications/customApplications';
+import CustomApplications from './pages/apps/customApplications';
 import { theme } from './theme';
-import swagger from './customApplications/swagger';
+import swagger from './pages/swagger/swagger';
 import  customApiList  from './customApplications/customApiList';
 import fakeDataProvider from './fakeDataProvider';
 

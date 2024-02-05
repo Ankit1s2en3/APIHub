@@ -29,24 +29,21 @@ const handleNavigate = (url) => {
 function SubHeader() {
   const classes = useStyles();
   var location = useLocation().pathname.split('/');
-  location = location[location.length-1]
-  console.log('location :> ',location)
-
+  console.log(location.includes("swagger"))
   const swaggerDownload = (location) =>{
-    switch(location){
-      case "public":
-        return <><Button color="inherit" variant="contained" className={classes.navButton} onClick={() => handleNavigate('#/dashboard')}>Download Specs</Button>
-        <Button color="inherit" variant="contained" className={classes.navButton} onClick={() => handleNavigate('#/apps')}>Authorize</Button></>
-      case "default":
-        return <></>
+    if(location.includes("swagger")){
+      return (<><Button color="inherit" variant="contained" className={classes.navButton} onClick={() => handleNavigate('#/dashboard')}>Download Specs</Button>
+      <Button color="inherit" variant="contained" className={classes.navButton} onClick={() => handleNavigate('#/apps')}>Authorize</Button></>)
     }
-  }
+      return <></>
+    }
+  
   return (
     <div className={classes.root}>
       <AppBar position="static" color="white">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            {location.toUpperCase()}
+            {location[location.length-1].toUpperCase()}
           </Typography>
           {swaggerDownload(location)}
         </Toolbar>

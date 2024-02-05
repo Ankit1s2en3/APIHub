@@ -6,7 +6,7 @@ import CameraIcon from '@material-ui/icons/Camera';
 const fakeDataProvider = {
   getList: (resource, params) => {
     if (resource === "apis") {
-
+      console.log('fake data provider is called :> ')
       return Promise.resolve({
         data: [
           { id: 1, title: 'PIM API', description: 'Get all PIM Carrier Apis.' },

@@ -15,22 +15,40 @@ const axiosInstance = axios.create({
 const network = {
   login: async (username, password) => {
     try {
-      const response = await axiosInstance.post('/authenticate/login', 
-                        { username, password,eula: 'accept' });
+      const creds = { "username": username, "password": password, "eula": "accept" }
+      console.log('creds ',creds)
+      const options = {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(creds)
+      };
+      let res = await fetch('/api/staging2/authenticate/login', options)
+      console.log('response headers :> ',res.headers)
+      console.log('cookies : ',res.headers.getSetCookie())
+      console.log('cookies : ',res.headers.entries)
+      res = await res.json()
+      console.log('response login :> ',res)
 
-      // Extract and save cookies from response headers
-      const cookies = response.headers['set-cookie'];
-      console.log('cookies : ',cookies)
-      console.log('login response : ',response)
-      if (cookies) {
-        cookies.forEach(cookie => {
-          document.cookie = cookie;
-        });
+      if(res.respCode === 200)
+        return {
+          status:true,
+          message:res.respMsg
+        }
+
+      return {
+        status:false,
+        // message:res.respMsg
       }
-
-      return response.data;
     } catch (error) {
-      throw error;
+      console.log('login error')
+      return {
+        status:false,
+        message:'error occured'
+      }
     }
   },
 

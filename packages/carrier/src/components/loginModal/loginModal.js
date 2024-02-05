@@ -49,9 +49,6 @@ export default function LoginModal(props) {
   const {setUser} = useAuth();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
-  const [userId,setUserId] = useState('')
-  const [password,setPassword] = useState('')
-  const [status,setStatus] = useState('')
   const [values, setValues] = React.useState({
     password: '',
     userId:'',
@@ -69,6 +66,18 @@ export default function LoginModal(props) {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  const handleSubmit = async (values) => {
+    const response = await network.login(values.userId, values.password);
+    if(response.status){
+      setValues({ ...values, 'status': '','password':'' });
+      setUser(true)
+      props.handleClose()
+    }else{
+      console.log('incorrect password!')
+      setValues({ ...values, 'status': response.message });
+    }
+  }
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
@@ -104,20 +113,7 @@ export default function LoginModal(props) {
           />
         </FormControl>
         {values.status !== '' && <p>{values.status}</p>}
-        <Button variant="contained" color="primary" onClick={async ()=>{
-            const response = await network.login(values.userId, values.password);
-            console.log(response)
-            if(values.userId==="ankit12"&& values.password==="abcd1234"){
-              console.log('correct password!')
-              setValues({ ...values, 'status': '','password':'' });
-              setUser(true)
-              props.handleClose()
-            }else{
-              console.log('incorrect password!')
-              setValues({ ...values, 'status': 'Incorrect Password' });
-
-            }
-          }}>
+        <Button variant="contained" color="primary" onClick={()=>handleSubmit(values)}>
             Login
         </Button>
         </form>

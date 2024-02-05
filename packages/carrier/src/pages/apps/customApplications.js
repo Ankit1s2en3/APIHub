@@ -8,7 +8,7 @@ import BookIcon from '@material-ui/icons/Book';
 import CameraIcon from '@material-ui/icons/Camera';
 import EnhancedEncryptionIcon from '@material-ui/icons/EnhancedEncryption';
 import PublicIcon from '@material-ui/icons/Public';
-import { useAuth } from '../context/authContext';
+import { useAuth } from '../../context/authContext';
 import { FormInput, Link, List, SimpleForm, TextInput, Toolbar,useListContext,useNotify } from 'react-admin';
 
 const useStyles = makeStyles((theme) => ({
@@ -133,7 +133,10 @@ function CustomApplications(props) {
     //     { id: 'availability', name: 'Availability API', icon: <CameraIcon className={classes.icon}/>, description: 'Get all Availability carrier api.' },
     //     { id: 'internal', name: 'Internal API', icon: <EnhancedEncryptionIcon className={classes.icon}/>, description: 'Get all Internal carrier api.' },
     // ];
-    const [apisList,setApisList] = useState([{ id: 'login', name: 'Public API', icon: <PublicIcon  className={classes.icon}/>, description: 'Get all public Carrier Apis.' }, ])
+    const [apisList,setApisList] = useState([
+        { id: 'login', name: 'Login API', icon: <PublicIcon  className={classes.icon}/>, description: 'Get all public Carrier Apis.' },
+        { id: 'pim', name: 'PIM API', icon: <ArchiveIcon  className={classes.icon}/>, description: 'Get all PIM Carrier Apis.' },
+        { id: 'pic', name: 'PIC API', icon: <SearchIcon  className={classes.icon}/>, description: 'Get all PIC Carrier Apis.' }, ])
     
     useEffect(()=>{
         if(user){
